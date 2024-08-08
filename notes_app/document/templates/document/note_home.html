@@ -1,0 +1,42 @@
+{% extends "document/base.html" %}
+{% block content %}
+    {% for note in notes %}
+        <article class="media content-section">
+            <div class="media-body">
+                <h2><a class="article-title" href="{% url 'note-detail' note.pk %}">{{ note.title }}</a></h2>
+                <div class="article-metadata">
+                    <small class="text-muted">last modified: {{ note.modified_at|date:"F d, Y" }}</small>
+                </div>
+                <p class="article-content">{{ note.content }}</p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content%}
+
+{% block scripts %}
+    const data = '{{qs_json}}'
+    console.log(data)
+
+    const rdata = JSON.parse(data.replace(/&quote;/g, '"'))
+    console.log(rdata)
+
+    const input = document.getElementById('search_here')
+    console.log(input)
+
+    let filteredArr = []
+
+    input.addEventListener('keyup', (e)=>{
+        const box = document.getElementById('box')
+        box.innerHTML = ""
+        filteredArr = rdata.filter(note=> note['name'].includes(e.target.value))
+        console.log(filteredArr)
+        if (filteredArr.length > 0){
+            filteredArr.map(item=>{
+                box.innerHTML += `<b>${note['name']}</b><br>`
+            })
+        } else {
+            box.innerHTML = "<b>No results found...</b>"
+
+        }
+    })
+{% endblock scripts %}

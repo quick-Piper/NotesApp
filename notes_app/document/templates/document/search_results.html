@@ -1,0 +1,14 @@
+{% extends 'document/base.html' %}
+{% block content %}
+    <h2>Search Results for "{{ query }}"</h2>
+
+    {% if results %}
+        <ul>
+            {% for note in results %}
+                <a class="mr-2" href="{% url 'user-posts' post.author.username %}"><li>{{ note.title }}: {{ note.content }}</li></a>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}
