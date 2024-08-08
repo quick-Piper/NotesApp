@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             newTheme = 'auto';
         }
-
+ 
         updateTheme(newTheme);
     });
 
